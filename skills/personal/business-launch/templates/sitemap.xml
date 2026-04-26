@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  RULES:
+  1. Only PUBLIC routes (renderable without auth) belong here.
+  2. Update <lastmod> when you ship a meaningful change to the page.
+  3. Verify every URL: `curl -I https://yourapp.com/path` must return 200, not 301/302.
+  4. Submit this sitemap to Google Search Console after launch.
+  5. NEVER include /auth, /dashboard, /onboarding, /settings — those are protected.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://yourapp.com/</loc>
+    <lastmod>2026-04-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://yourapp.com/upgrade</loc>
+    <lastmod>2026-04-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Add /blog/<slug> entries here once content exists -->
+</urlset>
