@@ -14,12 +14,14 @@ whatever each agent expects. Inspired by
 ├── install.sh        # symlink-based installer (idempotent, with backups)
 ├── skills/
 │   ├── personal/     # how I like to work, non-technical helpers
-│   └── coding/       # languages, frameworks, tools, style
+│   ├── coding/       # languages, frameworks, tools, style
+│   └── professional/ # people management, hiring, stakeholder comms
 ├── agents/           # sub-agent definitions (Expert Review Board, etc.)
 ├── hooks/            # shell scripts for Claude Code (settings.json wiring)
 └── guides/
     ├── personal/
-    └── coding/       # longer-form process docs referenced by skills
+    ├── coding/
+    └── professional/ # longer-form playbooks referenced by skills
 ```
 
 ## What's a skill?
