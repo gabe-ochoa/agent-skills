@@ -7,7 +7,7 @@ user_invocable: true
 # career-coaching
 
 Write a career coaching conversation prep doc for one of Gabe's direct reports. Full guide:
-`guides/professional/career-coaching-conversations.md (in this repo)`.
+`guides/professional/career-coaching-conversations.md` in the agent-skills repo.
 
 ## Inputs
 

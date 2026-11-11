@@ -7,7 +7,7 @@ user_invocable: true
 # host-recommendation
 
 Synthesize an interview packet into a hiring recommendation. Full guide:
-`guides/professional/host-leader-recommendation.md (in this repo)`.
+`guides/professional/host-leader-recommendation.md` in the agent-skills repo.
 
 ## Inputs
 

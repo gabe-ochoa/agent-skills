@@ -5,7 +5,7 @@ All four live in `supabase/functions/<name>/index.ts` and auto-deploy.
 ## 1. `create-checkout` (JWT required)
 
 Receives: `{ priceId: string, tier: string }`
-Returns: `{ url: string }` — Stripe Checkout Session URL
+Returns: `{ url: string }`, Stripe Checkout Session URL
 
 ```ts
 import Stripe from "https://esm.sh/stripe@14?target=denonext";
@@ -47,7 +47,7 @@ Deno.serve(async (req) => {
 ## 2. `customer-portal` (JWT required)
 
 Receives: nothing
-Returns: `{ url: string }` — Billing Portal URL
+Returns: `{ url: string }`, Billing Portal URL
 
 Same skeleton as above, but call `stripe.billingPortal.sessions.create({ customer, return_url })`.
 

@@ -52,7 +52,7 @@ Skip the panel for routine bug fixes, copy tweaks, small features.
 
 ## The 10-phase playbook
 
-Full phase-by-phase walkthrough with code snippets lives in `guides/personal/business-launch-playbook.md (in this repo)`. Read that for the how. The SKILL.md has the what and the exit checklists.
+Code snippets and common rescues for each phase are in `guides/personal/business-launch-playbook.md` in the agent-skills repo. This file has the what and the exit criteria.
 
 ### Phase 1. Discovery and positioning (no code)
 
@@ -76,7 +76,7 @@ Commit to:
 - Type pairing: one display font, one body font. Avoid Inter and Poppins.
 - Voice: 3 adjectives (for example, "warm, practical, expert").
 
-Implement in `src/index.css` (HSL tokens) and `tailwind.config.ts`. **Never** use raw color classes (`bg-green-500`) in components, only semantic tokens (`bg-primary`).
+Implement in `src/index.css` (HSL tokens) and `tailwind.config.ts`. Components use semantic tokens (`bg-primary`), not raw color classes (`bg-green-500`).
 
 **Exit:** A `<Button variant="hero">` and a card on a placeholder Landing page look intentional, not generic.
 
@@ -85,7 +85,7 @@ Implement in `src/index.css` (HSL tokens) and `tailwind.config.ts`. **Never** us
 | Route | Public? | Purpose |
 |---|---|---|
 | `/` | yes | Landing: hero, features, social proof, pricing teaser, CTA |
-| `/upgrade` or `/pricing` | yes | Full pricing (CRITICAL: public for SEO) |
+| `/upgrade` or `/pricing` | yes | Full pricing (public for SEO) |
 | `/auth` | yes | Login and signup |
 | `/onboarding` | locked | First-run setup |
 | `/dashboard` | locked | Main authenticated view |
@@ -93,7 +93,7 @@ Implement in `src/index.css` (HSL tokens) and `tailwind.config.ts`. **Never** us
 | `/settings` | locked | Profile, subscription, notifications |
 | `/unsubscribe` | yes | Email unsubscribe link target |
 
-In `src/App.tsx`, split cleanly: public routes outside `<ProtectedRoute>`, app routes inside `<ProtectedRoute><AppShell>`. **Never** put a protected route in the sitemap. Google flags it as "page with redirect" and drops the sitemap's authority.
+In `src/App.tsx`, public routes sit outside `<ProtectedRoute>` and app routes inside `<ProtectedRoute><AppShell>`. Keep protected routes out of the sitemap: Google flags them as "page with redirect" and drops the sitemap's authority.
 
 ### Phase 4. Backend foundation (Lovable Cloud)
 
@@ -103,7 +103,7 @@ Enable Lovable Cloud, create core schema in one migration (see `templates/schema
 - One core domain table for the hero feature
 - A `subscriptions` table mirroring Stripe
 - A `user_events` table for product analytics
-- If roles are needed: separate `user_roles` + `has_role()` SECURITY DEFINER function (NEVER on profiles)
+- If roles are needed: separate `user_roles` + `has_role()` SECURITY DEFINER function, never on `profiles` (privilege escalation risk)
 
 For every table: enable RLS, write `SELECT/INSERT/UPDATE/DELETE` policies scoped to `auth.uid()`, add a trigger to auto-create `profiles` on signup.
 
@@ -118,7 +118,7 @@ For every table: enable RLS, write `SELECT/INSERT/UPDATE/DELETE` policies scoped
 
 ### Phase 6. Hero feature (vertical slice)
 
-Build the ONE feature. Make it work end to end before adding anything else:
+Build the one feature. Make it work end to end before adding anything else:
 
 - CRUD UI
 - Real persistence
@@ -147,18 +147,18 @@ Build the ONE feature. Make it work end to end before adding anything else:
 
 ### Phase 9. SEO, analytics, growth
 
-**SEO (do not skip):**
+**SEO (required):**
 
 - `<SEOHead>` component (see `templates/seo-head.tsx`) setting title (<60 chars), meta description (<160 chars), canonical URL, Open Graph, Twitter card per page
 - Single `<h1>` per page, semantic HTML, `alt` on every image
 - JSON-LD: `Organization` plus `WebSite` on `/`, `Product` plus `Offer` on `/pricing`, `FAQPage` where applicable
-- `public/sitemap.xml` (see `templates/sitemap.xml`), only PUBLIC routes, accurate `<lastmod>`. Verify every URL returns 200, not a redirect.
+- `public/sitemap.xml` (see `templates/sitemap.xml`), only public routes, accurate `<lastmod>`. Verify every URL returns 200, not a redirect.
 - `public/robots.txt` points to the sitemap
 - `public/llms.txt` for LLM crawlers
 
 **Analytics:** `track(eventName, props)` helper writing to `user_events`. Instrument: signup, onboarding_completed, hero_action_completed, checkout_started, subscribed, churned.
 
-**Growth loop:** Pick ONE for v1. Referral code with reward (extends trial), shareable artifact (image card with branding), or public-by-default user content with noindex opt-out.
+**Growth loop:** Pick one for v1. Referral code with reward (extends trial), shareable artifact (image card with branding), or public-by-default user content with noindex opt-out.
 
 ### Phase 10. Launch
 
@@ -170,18 +170,15 @@ Build the ONE feature. Make it work end to end before adding anything else:
 
 See `checklists/launch.md` for the full pre-launch checklist.
 
-## Anti-patterns to refuse
+## Also refuse
 
-- Storing roles on the `profiles` table (privilege escalation risk)
-- FK from app tables to `auth.users` (use `user_id uuid`, join via profiles)
+Beyond the rules in the phases above:
+
 - CHECK constraints with `now()` (use validation triggers)
-- Putting protected routes in `sitemap.xml`
-- Hard-coding API keys in client code (use Lovable Cloud secrets)
-- Building 10 features before one works end to end
-- Generic Inter plus purple gradient design
-- Asking the user what storage/AI provider to use (default to Lovable Cloud plus Lovable AI)
-- Auto-confirming email signups unless explicitly requested
+- API keys in client code (use Lovable Cloud secrets)
+- Asking the user which storage or AI provider to use (default to Lovable Cloud plus Lovable AI)
 - Anonymous sign-ins
+- Building 10 features before one works end to end
 
 ## Tool quick-reference
 
@@ -201,20 +198,7 @@ See `checklists/launch.md` for the full pre-launch checklist.
 
 ## Files in this skill
 
-- `SKILL.md`: this file, read first
-- `checklists/launch.md`: final pre-launch checklist
-- `templates/schema.sql`: starter SQL (profiles, subscriptions, RLS, triggers)
-- `templates/seo-head.tsx`: drop-in `<SEOHead>` component
-- `templates/sitemap.xml`: sitemap template (public routes only)
-- `templates/stripe-edge-functions.md`: the 4 edge functions you always need
-- `governance/ceo-role.md`: how the agent acts as CEO
-- `governance/expert-review-panel.md`: the 8-expert panel spec (role-played by `launch-*-advisor` sub-agents)
-- `governance/board-of-directors.md`: the 5-seat board
-- `governance/board-roster.md`: template, fill in per company
-- `governance/decisions/DECISIONS.md`: append-only CEO decision log template
-- `governance/decisions/BOARD-MINUTES.md`: append-only board meeting log template
-
-Extended playbook with code snippets: `guides/personal/business-launch-playbook.md (in this repo)`.
+`checklists/launch.md`, `templates/` (schema, SEO head, sitemap, Stripe edge functions), and `governance/` (CEO role, expert panel, board, roster, and the append-only `DECISIONS.md` and `BOARD-MINUTES.md` templates).
 
 ## Success looks like
 

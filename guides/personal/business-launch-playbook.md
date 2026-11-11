@@ -5,10 +5,10 @@ Companion to `skills/personal/business-launch/SKILL.md`. Use when you need the *
 ## Phase 1. Discovery (template questions)
 
 ```
-1. "Who is the ONE person this is for?" — single persona, named if possible
-2. "Walk me through the painful moment they have today." — the trigger
-3. "What would make them say 'shut up and take my money'?" — the hero outcome
-4. "What's the smallest version we could ship that delivers that outcome?" — MVP scope
+1. "Who is the one person this is for?" (single persona, named if possible)
+2. "Walk me through the painful moment they have today." (the trigger)
+3. "What would make them say 'shut up and take my money'?" (the hero outcome)
+4. "What's the smallest version we could ship that delivers that outcome?" (MVP scope)
 ```
 
 Write the answers verbatim into `.lovable/plan.md`. Refer back every phase. When scope creeps, this is your anchor.
@@ -53,7 +53,7 @@ Good: `<div className="bg-primary text-primary-foreground">`
 </BrowserRouter>
 ```
 
-Pricing pages MUST be public. If a logged-out user hits "Subscribe", route them to `/auth?redirect=/upgrade`.
+Pricing pages are public. If a logged-out user hits "Subscribe", route them to `/auth?redirect=/upgrade`.
 
 ## Phase 4. Schema starter
 
@@ -64,7 +64,7 @@ See `skills/personal/business-launch/templates/schema.sql`. Always include:
 - `user_events(event_name, metadata jsonb, user_id, created_at)` for analytics
 - RLS enabled on every table with `auth.uid() = user_id` policies
 
-For roles, NEVER store on profiles:
+Roles live in their own table, never on `profiles`:
 
 ```sql
 create type app_role as enum ('admin', 'user');
@@ -204,10 +204,3 @@ See `skills/personal/business-launch/checklists/launch.md`.
 | AI 429 | Add user-facing toast, surface "try again in a moment" |
 | AI 402 | Lovable AI credits exhausted, tell user to top up workspace |
 | Trial users not converting | Add a usage milestone email at day 5 of trial |
-
-## What to do when stuck
-
-1. Reproduce the bug yourself before guessing (browser tools, console logs, network tab).
-2. Read the actual error message. Don't pattern-match.
-3. If 3 attempts fail, change approach (simpler implementation, different library, ask user).
-4. Verify the fix with the same signal that revealed the bug.

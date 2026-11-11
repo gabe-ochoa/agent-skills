@@ -50,7 +50,7 @@ Don't publish until every box is ✅. Each item should take <2 minutes to verify
 
 - [ ] Custom domain DNS propagated (`dig yourapp.com`)
 - [ ] HTTPS works, no mixed content warnings
-- [ ] `www` redirects to apex (or vice versa) — pick one canonical host
+- [ ] `www` redirects to apex (or vice versa); pick one canonical host
 - [ ] 404 page is branded, not default
 
 ## Analytics
@@ -65,7 +65,7 @@ Don't publish until every box is ✅. Each item should take <2 minutes to verify
 
 - [ ] Submit sitemap to Google Search Console
 - [ ] Submit sitemap to Bing Webmaster Tools
-- [ ] Post launch announcement on the 2–3 channels where the persona lives
+- [ ] Post launch announcement on the 2 to 3 channels where the persona lives
 - [ ] Monitor `supabase--edge_function_logs` for errors hourly on day 1
 - [ ] DM the first 5 signups personally to ask what they think
 
